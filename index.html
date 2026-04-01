@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Axios Supply Chain Attack Checker - CVE-2026-XXXXX</title>
+  <title>Axios Supply Chain Attack Checker - CVE-2026-25639</title>
   <meta name="description" content="Check if your project is affected by the Axios npm supply chain attack (March 31, 2026). Scan lockfiles, detect RAT artifacts, and get remediation steps.">
   <style>
     :root {
@@ -447,9 +447,9 @@
 <body>
   <div class="container">
     <header>
-      <div class="alert-badge">Active Threat - March 31, 2026</div>
+      <div class="alert-badge">Active Threat - CVE-2026-25639</div>
       <h1>Axios Supply Chain Attack Checker</h1>
-      <p>Versions <strong>1.14.1</strong> and <strong>0.30.4</strong> of Axios were compromised with a cross-platform RAT via a malicious dependency. Check if your projects are affected.</p>
+      <p>Versions <strong>1.14.1</strong> and <strong>0.30.4</strong> of Axios were compromised with a cross-platform RAT (WAVESHAPER.V2) via a malicious dependency. Attributed to North Korea-nexus threat actor UNC1069 (Lazarus Group) by Google GTIG. Check if your projects are affected.</p>
     </header>
 
     <!-- Section 1: Lockfile Scanner -->
@@ -593,8 +593,38 @@ ss -tnp | grep -i "142.11.206.73" 2>/dev/null</div>
           </tr>
           <tr>
             <td><span class="tag tag-blue">Network</span></td>
-            <td><code>142.11.206.73</code></td>
-            <td>C2 server IP address</td>
+            <td><code>142.11.206.73:8000</code></td>
+            <td>C2 server IP and port (beacons every 60s)</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-blue">Network</span></td>
+            <td><code>packages.npm.org/product1</code></td>
+            <td>C2 payload URL (used in PowerShell dropper)</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-yellow">Package</span></td>
+            <td><code>plain-crypto-js@4.2.0</code></td>
+            <td>Clean decoy published 18h before attack to establish npm history (also replaced with security placeholder)</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-yellow">Identity</span></td>
+            <td><code>ifstap@proton.me</code></td>
+            <td>Attacker email set on hijacked jasonsaayman npm account</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-yellow">Identity</span></td>
+            <td><code>nrwise@proton.me</code></td>
+            <td>Publisher of malicious plain-crypto-js package</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-blue">Advisory</span></td>
+            <td><code>SNYK-JS-AXIOS-15850650</code></td>
+            <td>Snyk security advisory for this compromise</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-yellow">Detection</span></td>
+            <td><code>JS/Agent-BLYB</code><br><code>Troj/PSAgent-CN</code><br><code>Troj/PyAgent-BZ</code><br><code>OSX/NukeSped-CB</code></td>
+            <td>Sophos AV detection signatures for WAVESHAPER.V2 payloads</td>
           </tr>
           <tr>
             <td><span class="tag tag-red">File</span></td>
@@ -643,16 +673,36 @@ ss -tnp | grep -i "142.11.206.73" 2>/dev/null</div>
           <div class="timeline-text">Malicious <code>plain-crypto-js@4.2.1</code> published with postinstall RAT dropper</div>
         </div>
         <div class="timeline-item">
+          <div class="timeline-time">March 31, 2026 &mdash; 00:05 UTC</div>
+          <div class="timeline-text">Socket automated scanner flags <code>plain-crypto-js@4.2.1</code> as malware (~6 min after publish)</div>
+        </div>
+        <div class="timeline-item">
           <div class="timeline-time">March 31, 2026 &mdash; 00:21 UTC</div>
-          <div class="timeline-text"><code>axios@1.14.1</code> published via compromised maintainer account</div>
+          <div class="timeline-text"><code>axios@1.14.1</code> published via compromised <code>jasonsaayman</code> npm account (email changed to attacker-controlled <code>ifstap@proton.me</code>)</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">March 31, 2026 &mdash; 00:23 UTC</div>
+          <div class="timeline-text">First confirmed infection &mdash; macOS endpoint executes RAT, 89 seconds after publish (Huntress)</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">March 31, 2026 &mdash; 00:58 UTC</div>
+          <div class="timeline-text">First confirmed Windows infection via <code>wt.exe</code> (Huntress)</div>
         </div>
         <div class="timeline-item">
           <div class="timeline-time">March 31, 2026 &mdash; 01:00 UTC</div>
-          <div class="timeline-text"><code>axios@0.30.4</code> published (both branches hit within 39 minutes)</div>
+          <div class="timeline-text"><code>axios@0.30.4</code> published &mdash; legacy branch targeted, both lines hit within 39 minutes</div>
         </div>
         <div class="timeline-item">
           <div class="timeline-time">March 31, 2026 &mdash; ~01:38 UTC</div>
-          <div class="timeline-text">Axios team merges deprecation workflow, begins community response</div>
+          <div class="timeline-text">Axios team response begins; StepSecurity CTO reports compromise to maintainers</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">March 31, 2026 &mdash; 01:50 UTC</div>
+          <div class="timeline-text">Elastic Security Labs files GitHub Security Advisory to axios repository</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">March 31, 2026 &mdash; ~03:29 UTC</div>
+          <div class="timeline-text">npm security team removes both malicious axios versions, revokes compromised tokens, and replaces <code>plain-crypto-js</code> with <code>0.0.1-security</code> placeholder</div>
         </div>
       </div>
     </div>
@@ -663,11 +713,11 @@ ss -tnp | grep -i "142.11.206.73" 2>/dev/null</div>
       <ul class="checklist">
         <li>
           <span class="check-num">1</span>
-          <div><strong>Downgrade axios immediately</strong><br><span style="color:var(--text-dim);font-size:0.85rem;">Roll back to <code>axios@1.14.0</code> or <code>axios@0.30.3</code>. Pin the version in package.json.</span></div>
+          <div><strong>Downgrade axios and pin with overrides</strong><br><span style="color:var(--text-dim);font-size:0.85rem;">Roll back to <code>axios@1.14.0</code> or <code>axios@0.30.3</code>. Add overrides to prevent transitive resolution: <code>"overrides": {"axios": "1.14.0"}</code> and <code>"resolutions": {"axios": "1.14.0"}</code> in package.json.</span></div>
         </li>
         <li>
           <span class="check-num">2</span>
-          <div><strong>Remove the malicious dependency</strong><br><span style="color:var(--text-dim);font-size:0.85rem;"><code>rm -rf node_modules/plain-crypto-js && npm install --ignore-scripts</code></span></div>
+          <div><strong>Remove the malicious dependency and clean caches</strong><br><span style="color:var(--text-dim);font-size:0.85rem;"><code>rm -rf node_modules/plain-crypto-js && npm install --ignore-scripts</code>. Also run <code>npm cache clean --force</code>, <code>yarn cache clean</code>, or <code>pnpm store prune</code> to purge cached copies.</span></div>
         </li>
         <li>
           <span class="check-num">3</span>
@@ -675,19 +725,23 @@ ss -tnp | grep -i "142.11.206.73" 2>/dev/null</div>
         </li>
         <li>
           <span class="check-num">4</span>
-          <div><strong>If RAT artifacts are found &mdash; assume full compromise</strong><br><span style="color:var(--text-dim);font-size:0.85rem;">Rotate <em>all</em> credentials: npm tokens, SSH keys, cloud API keys, database passwords, CI/CD secrets, crypto wallets.</span></div>
+          <div><strong>If RAT artifacts are found &mdash; assume full compromise</strong><br><span style="color:var(--text-dim);font-size:0.85rem;">Rotate <em>all</em> credentials: npm tokens, SSH keys, cloud API keys, database passwords, CI/CD secrets, crypto wallets. Do not attempt to clean in place &mdash; rebuild from a known-good state.</span></div>
         </li>
         <li>
           <span class="check-num">5</span>
-          <div><strong>Block C2 at the network level</strong><br><span style="color:var(--text-dim);font-size:0.85rem;">Block egress to <code>sfrclak[.]com</code> and <code>142.11.206.73</code> in your firewall/DNS.</span></div>
+          <div><strong>Block C2 at the network level</strong><br><span style="color:var(--text-dim);font-size:0.85rem;">Block egress to <code>sfrclak[.]com</code> and <code>142.11.206.73:8000</code> in your firewall/DNS.</span></div>
         </li>
         <li>
           <span class="check-num">6</span>
-          <div><strong>Audit CI/CD pipelines</strong><br><span style="color:var(--text-dim);font-size:0.85rem;">Check if any build ran between Mar 31 00:21 UTC and the malicious versions being pulled. Those runners may be compromised.</span></div>
+          <div><strong>Audit CI/CD pipelines and Docker images</strong><br><span style="color:var(--text-dim);font-size:0.85rem;">Check if any build ran between Mar 31 00:21&ndash;03:29 UTC. Invalidate <code>node_modules</code> cache keys created during the window. Rebuild any Docker images built during that period &mdash; malicious packages may be baked into image layers.</span></div>
         </li>
         <li>
           <span class="check-num">7</span>
-          <div><strong>Harden for the future</strong><br><span style="color:var(--text-dim);font-size:0.85rem;">Use <code>npm ci --ignore-scripts</code> in CI. Pin exact versions. Verify package provenance (SLSA attestations). Use lockfile integrity checks.</span></div>
+          <div><strong>Purge private registries</strong><br><span style="color:var(--text-dim);font-size:0.85rem;">If you run JFrog Artifactory, Sonatype Nexus, Verdaccio, AWS CodeArtifact, or GitHub Packages, search for and delete cached copies of <code>axios@1.14.1</code>, <code>axios@0.30.4</code>, and <code>plain-crypto-js@4.2.1</code>. Add these to your registry blocklist.</span></div>
+        </li>
+        <li>
+          <span class="check-num">8</span>
+          <div><strong>Harden for the future</strong><br><span style="color:var(--text-dim);font-size:0.85rem;">Use <code>npm ci --ignore-scripts</code> in CI. Pin exact versions. Commit lockfiles and enforce <code>npm ci</code> over <code>npm install</code>. Verify package provenance (SLSA attestations). Add <code>plain-crypto-js</code> to your security tooling blocklist.</span></div>
         </li>
       </ul>
     </div>
@@ -712,10 +766,15 @@ ls /Library/Caches/com.apple.act.mond /tmp/ld.py 2>/dev/null &amp;&amp; echo "RA
       <p style="margin-top:0.5rem;">
         Sources:
         <a href="https://stepsecurity.io/blog/axios-compromised-on-npm-malicious-versions-drop-remote-access-trojan" target="_blank" rel="noopener">StepSecurity</a> &middot;
-        <a href="https://socket.dev/blog/axios-npm-package-compromised" target="_blank" rel="noopener">Socket</a> &middot;
-        <a href="https://safedep.io/axios-npm-supply-chain-compromise" target="_blank" rel="noopener">SafeDep</a> &middot;
-        <a href="https://aikido.dev/blog/axios-npm-compromised-maintainer-hijacked-rat" target="_blank" rel="noopener">Aikido</a>
+        <a href="https://cloud.google.com/blog/topics/threat-intelligence/north-korea-threat-actor-targets-axios-npm-package/" target="_blank" rel="noopener">Google GTIG</a> &middot;
+        <a href="https://www.huntress.com/blog/supply-chain-compromise-axios-npm-package" target="_blank" rel="noopener">Huntress</a> &middot;
+        <a href="https://snyk.io/blog/axios-npm-package-compromised-supply-chain-attack-delivers-cross-platform/" target="_blank" rel="noopener">Snyk</a> &middot;
+        <a href="https://www.elastic.co/security-labs/axios-one-rat-to-rule-them-all" target="_blank" rel="noopener">Elastic</a> &middot;
+        <a href="https://www.sans.org/blog/axios-npm-supply-chain-compromise-malicious-packages-remote-access-trojan" target="_blank" rel="noopener">SANS</a> &middot;
+        <a href="https://semgrep.dev/blog/2026/axios-supply-chain-incident-indicators-of-compromise-and-how-to-contain-the-threat" target="_blank" rel="noopener">Semgrep</a> &middot;
+        <a href="https://socket.dev/blog/axios-npm-package-compromised" target="_blank" rel="noopener">Socket</a>
       </p>
+      <p style="margin-top:0.25rem;font-size:0.7rem;">Last updated: April 1, 2026</p>
     </footer>
   </div>
 
@@ -758,6 +817,11 @@ ls /Library/Caches/com.apple.act.mond /tmp/ld.py 2>/dev/null &amp;&amp; echo "RA
 
       if (/@qqbrowser\/openclaw-qbot/i.test(input)) {
         findings.push({ severity: 'high', msg: '@qqbrowser/openclaw-qbot found — ships tampered axios with malware' });
+      }
+
+      // Check for the clean decoy version (also suspicious)
+      if (/plain-crypto-js[\s\S]*?4\.2\.0/i.test(input) || /plain-crypto-js@4\.2\.0/i.test(input)) {
+        findings.push({ severity: 'high', msg: 'plain-crypto-js@4.2.0 (clean decoy used to stage attack) found' });
       }
 
       // Check for C2 references
